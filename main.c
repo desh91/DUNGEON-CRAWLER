@@ -412,7 +412,7 @@ void fase2(int *vidas, int *reinicios) {
 }
 
 void fase3(int *vidas, int *reinicios) {
-    // Mapa da fase 3 reformulado - mais organizado, balanceado e jogável
+    // Mapa da fase 3
     char mapa[TAM_FASE3][TAM_FASE3] = {
         "****************************************",
         "*&                                   D *",
@@ -458,10 +458,10 @@ void fase3(int *vidas, int *reinicios) {
     
     int px = 1, py = 1;  // Posição inicial do jogador (canto superior esquerdo)
     int chavesColetadas = 0;
-    int totalChaves = 1;  // Apenas uma chave conforme solicitado
-    int m1_x = 6, m1_y = 6;   // Monstro aleatório 1 - área superior
-    int m2_x = 33, m2_y = 33; // Monstro aleatório 2 - área inferior
-    int mV_x = 20, mV_y = 20; // Monstro inteligente V - área central
+    int totalChaves = 1;  
+    int m1_x = 6, m1_y = 6;   // Monstro aleatório 1 
+    int m2_x = 33, m2_y = 33; // Monstro aleatório 2 
+    int mV_x = 20, mV_y = 20; // Monstro inteligente V 
     int armadilhaDesativada = 0;
     int portaAberta = 0;
     int contadorMovimento = 0; // Para controlar movimento do monstro V
@@ -582,7 +582,7 @@ void fase3(int *vidas, int *reinicios) {
             }
         }
 
-        // Sistema de Teletransportes - posicionados estrategicamente
+        // Sistema de Teletransportes 
         if(px == 10 && py == 12) {  // Teletransporte esquerdo
             px = 30; py = 17;  // para teletransporte direito
             printf("\n>>> TELETRANSPORTADO! <<<\n");
@@ -594,7 +594,7 @@ void fase3(int *vidas, int *reinicios) {
             Sleep(1000);
         }
 
-        // Movimento dos monstros (apenas quando o jogador se move)
+        // Movimento dos monstros
         if(jogadorMoveu) {
             contadorMovimento++;
             
@@ -630,7 +630,7 @@ void fase3(int *vidas, int *reinicios) {
             printf("Perdeu uma vida! Reiniciando fase em 3 segundos...\n");
             Sleep(3000);
             
-            // Verifica game over
+            // Verifica derrota
             if(*reinicios >= MAX_REINICIOS || *vidas <= 0) {
                 telaDerrota();
                 *reinicios = 0;
@@ -724,7 +724,7 @@ void menuPrincipal() {
 }
 
 int main() {
-    // Configuração inicial
+    
     srand(time(NULL));
     SetConsoleTitle("Dungeon Crawler - Projeto");
 
