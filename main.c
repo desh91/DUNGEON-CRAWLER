@@ -5,7 +5,7 @@
 #include <time.h>
 #include <conio.h>
 #include <windows.h>
-
+// fase 1 e 2 prontas
 // Configurações globais fase  
 #define TAM_FASE1 10
 #define TAM_FASE2 20
@@ -13,6 +13,7 @@
 #define MAX_VIDAS 3
 #define MAX_REINICIOS 3
 
+// Funções auxiliares
 void clearScreen() {
     system("cls");
 }
@@ -29,10 +30,11 @@ void exibirTela(const char* titulo, const char* mensagem) {
     esperarEnter();
 }
 
+// Telas do jogo
 void creditos() {
     exibirTela("CREDITOS", 
         "Desenvolvido por:\n"
-        "- RAFAEL ARRUDA SALES\n"
+        "- RAFAEL ARRUDA\n"
         "- GABRIEL TEIXEIRA\n"
         "- GUSTAVO ALENCAR\n\n"
         "Centro Universitario do Para\n"
@@ -79,6 +81,7 @@ void moverMonstroV(int *vx, int *vy, int px, int py, char mapa[][TAM_FASE3], int
     int dx = px - *vx;
     int dy = py - *vy;
     
+    // Tenta mover na direção com maior diferença primeiro
     if(abs(dx) >= abs(dy)) {
         // Movimento vertical
         if(dx > 0 && *vx+1 < tamanho && mapa[*vx+1][*vy] != '*' && 
@@ -142,9 +145,10 @@ void vila() {
         clearScreen();
         printf("=== VILA (TUTORIAL) ===\n");
         printf("Use WASD para mover, I para interagir\n\n");
-
-        for(int i = 0; i < TAM_FASE1; i++) {
-            for(int j = 0; j < TAM_FASE1; j++) {
+        
+        int i,j;
+        for(i = 0; i < TAM_FASE1; i++) {
+            for(j = 0; j < TAM_FASE1; j++) {
                 if (i == px && j == py) printf("&");
                 else printf("%c", mapa[i][j]);
             }
@@ -211,9 +215,10 @@ void fase1(int *vidas, int *reinicios) {
         clearScreen();
         printf("=== FASE 1 ===\n");
         printf("Vidas: %d | Reinicios: %d/%d\n\n", *vidas, *reinicios, MAX_REINICIOS);
-
-        for(int i = 0; i < TAM_FASE1; i++) {
-            for(int j = 0; j < TAM_FASE1; j++) {
+        
+        int i,j;
+        for(i = 0; i < TAM_FASE1; i++) {
+            for(j = 0; j < TAM_FASE1; j++) {
                 if(i == px && j == py) printf("&");
                 else printf("%c", mapa[i][j]);
             }
@@ -306,8 +311,9 @@ void fase2(int *vidas, int *reinicios) {
         printf("Cuidado com os espinhos (#)!\n\n");
 
         // Exibe o mapa
-        for(int i = 0; i < TAM_FASE2; i++) {
-            for(int j = 0; j < TAM_FASE2; j++) {
+        int i,j;
+        for(i = 0; i < TAM_FASE2; i++) {
+            for(j = 0; j < TAM_FASE2; j++) {
                 if(i == px && j == py) printf("&");
                 else if(i == m_x && j == m_y) printf("X");
                 else printf("%c", mapa[i][j]);
@@ -350,7 +356,8 @@ void fase2(int *vidas, int *reinicios) {
                 else if(px == 3 && py == 9 && !botaoAtivado) {
                     botaoAtivado = 1;
                     // Remove a barreira bloqueada (asteriscos na linha do meio)
-                    for(int i = 4; i <= 11; i++) {
+                    int i;
+                    for( i = 4; i <= 11; i++) {
                         if(mapa[i][9] == '*') mapa[i][9] = ' ';
                     }
                     printf("\nBotao ativado! Passagem secreta aberta!\n");
@@ -405,7 +412,7 @@ void fase2(int *vidas, int *reinicios) {
 }
 
 void fase3(int *vidas, int *reinicios) {
-    
+    // Mapa da fase 3 reformulado - mais organizado, balanceado e jogável
     char mapa[TAM_FASE3][TAM_FASE3] = {
         "****************************************",
         "*&                                   D *",
@@ -449,12 +456,12 @@ void fase3(int *vidas, int *reinicios) {
         "****************************************",
     };
     
-    int px = 1, py = 1;  // Posição inicial do jogador
+    int px = 1, py = 1;  // Posição inicial do jogador (canto superior esquerdo)
     int chavesColetadas = 0;
-    int totalChaves = 1;  
-    int m1_x = 6, m1_y = 6;   // Monstro aleatório 1 
-    int m2_x = 33, m2_y = 33; // Monstro aleatório 2 
-    int mV_x = 20, mV_y = 20; // Monstro inteligente V 
+    int totalChaves = 1;  // Apenas uma chave conforme solicitado
+    int m1_x = 6, m1_y = 6;   // Monstro aleatório 1 - área superior
+    int m2_x = 33, m2_y = 33; // Monstro aleatório 2 - área inferior
+    int mV_x = 20, mV_y = 20; // Monstro inteligente V - área central
     int armadilhaDesativada = 0;
     int portaAberta = 0;
     int contadorMovimento = 0; // Para controlar movimento do monstro V
@@ -469,8 +476,9 @@ void fase3(int *vidas, int *reinicios) {
         printf("Cuidado: X=monstro aleatorio, V=monstro inteligente!\n\n");
 
         // Exibe o mapa
-        for(int i = 0; i < TAM_FASE3; i++) {
-            for(int j = 0; j < TAM_FASE3; j++) {
+        int i,j;
+        for(i = 0; i < TAM_FASE3; i++) {
+            for(j = 0; j < TAM_FASE3; j++) {
                 if(i == px && j == py) {
                     printf("&");
                 }
@@ -490,7 +498,7 @@ void fase3(int *vidas, int *reinicios) {
             printf("\n");
         }
 
-        // Verifica condição de vitória
+        // Verifica condição de vitória (chegada na porta aberta)
         if(px == 1 && py == 38 && portaAberta) {
             telaVitoria();
             return;
@@ -531,18 +539,23 @@ void fase3(int *vidas, int *reinicios) {
                     portaAberta = 1;
                     Sleep(2000);
                 }
-                // Interação com o botão 
+                // Interação com o botão - abre passagens úteis
                 else if(px == 10 && py == 18 && !armadilhaDesativada) {
                     armadilhaDesativada = 1;
                     printf("\nBotao ativado! Passagens secretas abertas!\n");
                     
-                    for(int j = 8; j <= 32; j++) {
+                    // Abre passagens estratégicas para facilitar navegação
+                    // Passagem horizontal central
+                    int j;
+                    for(j = 8; j <= 32; j++) {
                         if(mapa[20][j] == '#') {
                             mapa[20][j] = ' ';
                         }
                     }
                     
-                    for(int i = 8; i <= 32; i++) {
+                    // Passagem vertical central
+                    int i;
+                    for(i = 8; i <= 32; i++) {
                         if(mapa[i][20] == '#') {
                             mapa[i][20] = ' ';
                         }
@@ -562,13 +575,14 @@ void fase3(int *vidas, int *reinicios) {
         if(novo_px >= 0 && novo_px < TAM_FASE3 && novo_py >= 0 && novo_py < TAM_FASE3) {
             char destino = mapa[novo_px][novo_py];
             
+            // Pode mover para espaços vazios, chave, botão, teletransporte, porta aberta
             if(destino != '*' && !(destino == 'D' && !portaAberta)) {
                 px = novo_px;
                 py = novo_py;
             }
         }
 
-        // Sistema de Teletransportes 
+        // Sistema de Teletransportes - posicionados estrategicamente
         if(px == 10 && py == 12) {  // Teletransporte esquerdo
             px = 30; py = 17;  // para teletransporte direito
             printf("\n>>> TELETRANSPORTADO! <<<\n");
@@ -588,7 +602,7 @@ void fase3(int *vidas, int *reinicios) {
             moverMonstroAleatorio(&m1_x, &m1_y, mapa, TAM_FASE3);
             moverMonstroAleatorio(&m2_x, &m2_y, mapa, TAM_FASE3);
             
-            // Monstro inteligente V se move a cada 3 movimentos
+            // Monstro inteligente V se move a cada 3 movimentos (mais balanceado)
             if(contadorMovimento % 3 == 0) {
                 moverMonstroV(&mV_x, &mV_y, px, py, mapa, TAM_FASE3);
             }
@@ -616,7 +630,7 @@ void fase3(int *vidas, int *reinicios) {
             printf("Perdeu uma vida! Reiniciando fase em 3 segundos...\n");
             Sleep(3000);
             
-            // Verifica derrota
+            // Verifica game over
             if(*reinicios >= MAX_REINICIOS || *vidas <= 0) {
                 telaDerrota();
                 *reinicios = 0;
@@ -710,10 +724,11 @@ void menuPrincipal() {
 }
 
 int main() {
-    
+    // Configuração inicial
     srand(time(NULL));
     SetConsoleTitle("Dungeon Crawler - Projeto");
 
+    // Inicia o jogo
     menuPrincipal();
     return 0;
 }
